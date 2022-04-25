@@ -1,4 +1,5 @@
 import ConfigService from '@/services/ConfigService';
+import FastifyService from '@/services/FastifyService';
 import assert from 'assert';
 import debug from "debug";
 import moment from 'moment';
@@ -21,6 +22,7 @@ assert(moment().utcOffset() === 480, "System timezone must be +0800");
   try {
     await ConfigService.startUp();
     await MongooseService.startUp();
+    await FastifyService.startUp();
 
     /** Notify pm2 that we are ready to serve. */
     if (process.send) {

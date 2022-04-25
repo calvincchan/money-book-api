@@ -20,6 +20,7 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.0",
     "fastify": "^3.28.0",
+    "fastify-cors": "^6.0.3",
     "moment": "^2.29.3",
     "mongoose": "^6.3.1",
     "mongoose-plugin-autoinc": "^1.1.9",
