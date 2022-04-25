@@ -1,3 +1,4 @@
+import initRoutes from "@/routes";
 import config from "@/services/ConfigService";
 import Debug from "debug";
 import Fastify, { FastifyInstance } from "fastify";
@@ -21,10 +22,7 @@ export async function startUp(): Promise<FastifyInstance> {
   server.register(cors, { origin: "*", exposedHeaders: ["X-Current-Page", "X-Page-Size", "X-Total-Pages", "X-Total-Count", "Content-Disposition"] });
 
   /** Init default routes. */
-  server.get("/", async function () {
-    return { status: "running" };
-  });
-  // server.get("/v2/public/*", restify.plugins.serveStaticFiles("./public"));
+  server.register(initRoutes);
 
   /** Start server. */
   config.required(["HOST", "PORT"]);
