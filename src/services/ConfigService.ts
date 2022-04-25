@@ -36,6 +36,8 @@ class ConfigData extends RuntimeConfigData {
   SERVER_DOMAIN?: string;
   /** Mongoose database connection string. */
   MONGO_URI?: string;
+  /** Mongoose database name. */
+  MONGO_DB_NAME?: string;
   /** SSL CA for secured Mongoose connection. */
   MONGO_SSL_CA?: string;
   /** Use "production" to turn off debug logging. */
@@ -49,6 +51,7 @@ const defaultConfig: ConfigData = {
   PORT: "50420",
   SERVER_DOMAIN: "http://0.0.0.0:50420",
   MONGO_URI: "",
+  MONGO_DB_NAME: "moneybook",
   MONGO_SSL_CA: "",
   NODE_ENV: process.env.NODE_ENV,
 };
