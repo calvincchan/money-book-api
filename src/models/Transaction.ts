@@ -4,6 +4,7 @@ import { autoIncrement } from "mongoose-plugin-autoinc";
 const MODEL_NAME = "Transaction";
 
 export interface Transaction extends Document {
+  /** Transaction ID */
   _id: number;
   /** Monetary value in cent. */
   value: number;
@@ -17,6 +18,8 @@ export interface Transaction extends Document {
   transactionDate: Date,
   /** Custom description. */
   description: string;
+  /** Book ID */
+  book: number;
 }
 
 export async function initModel(connection: Connection) {
@@ -45,6 +48,9 @@ export async function initModel(connection: Connection) {
       description: {
         type: String,
         default: ""
+      },
+      book: {
+        type: Number
       }
     },
     {
