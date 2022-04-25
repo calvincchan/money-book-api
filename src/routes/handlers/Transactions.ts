@@ -7,7 +7,6 @@ import { FilterQuery } from "mongoose";
 const query: RouteHandler<{ Querystring: { month: string; day: string } }> = async function (req, res) {
   const db = MongooseService.getConnection();
   const Transaction = db.model<Transaction>("Transaction");
-  console.log("🚀 ~ file: index.ts ~ line 12 ~ req.query", req.query);
   const filter = deriveFilter(req.query);
   const result = await Transaction.find(filter).sort("_id");
   const count = await Transaction.countDocuments(filter);
