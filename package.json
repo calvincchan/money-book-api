@@ -11,6 +11,8 @@
     "node": ">=14.0.0"
   },
   "scripts": {
+    "pretest": "node set-version.js",
+    "test": "jest --runInBand",
     "dev": "node set-version.js && ts-node-dev --clear --respawn --exit-child -r tsconfig-paths/register src/",
     "start": "node -r module-alias/register dist/index.js"
   },
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
+    "@types/jest": "^27.4.1",
     "@types/tmp": "^0.2.3",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
@@ -36,8 +39,11 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "expect": "^27.5.1",
     "git-rev-sync": "^3.0.2",
+    "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.14.1"
   }
