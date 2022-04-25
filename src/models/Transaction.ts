@@ -5,7 +5,7 @@ const MODEL_NAME = "Transaction";
 
 export interface Transaction extends Document {
   _id: number;
-  /** Monetary value. */
+  /** Monetary value in cent. */
   value: number;
   /** Transaction text label. */
   label: string;

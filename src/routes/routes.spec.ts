@@ -30,6 +30,11 @@ describe(`Routes`, () => {
     /** Prepare init data */
     const db = MongooseService.getConnection();
     const Transaction = db.model<Transaction>("Transaction");
+    for (let i = 1; i <= 10; i++) {
+      await Transaction.create({
+        value: Math.round(Math.random() * 1000), label: `transaction${i}`, transactionDate: new Date()
+      })
+    }
   });
 
   afterAll(async () => {
@@ -47,6 +52,18 @@ describe(`Routes`, () => {
       });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toMatchObject({ status: "running" });
+    });
+  });
+
+  describe(`/transactions`, () => {
+    it("should get all transactions", async () => {
+      const res = await server.inject({
+        method: "GET",
+        url: `/transactions`
+      });
+      console.log("🚀 ~ file: routes.spec.ts ~ line 64 ~ it ~ res", res.json());
+      expect(res.statusCode).toBe(200);
+      expect(res.headers["x-total-count"]).toBe(10);
     });
   });
 });

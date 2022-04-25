@@ -2,10 +2,14 @@ import { Transaction } from "@/models/Transaction";
 import MongooseService from "@/services/MongooseService";
 import { FastifyPluginAsync, RouteHandler } from "fastify";
 
-const queryTransaction: RouteHandler = async function (req) {
+
+const queryTransaction: RouteHandler = async function (req, res) {
   const db = MongooseService.getConnection();
   const Transaction = db.model<Transaction>("Transaction");
-  const result = await Transaction.find({});
+  const filter = {};
+  const result = await Transaction.find(filter).sort("_id");
+  const count = await Transaction.countDocuments(filter)
+  res.header("X-Total-Count", count)
   return result;
 }
 
