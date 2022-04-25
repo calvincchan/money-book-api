@@ -28,7 +28,7 @@ export async function initModel(connection: Connection) {
       },
       label: {
         type: String,
-        required: true,
+        default: "",
       },
       confirmed: {
         type: Boolean,
@@ -40,7 +40,7 @@ export async function initModel(connection: Connection) {
       },
       transactionDate: {
         type: Date,
-        required: true
+        default: () => new Date()
       },
       description: {
         type: String,

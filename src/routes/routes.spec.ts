@@ -3,6 +3,7 @@ import { Transaction } from "@/models/Transaction";
 import ConfigService from "@/services/ConfigService";
 import MongooseService from "@/services/MongooseService";
 import Fastify, { FastifyInstance } from "fastify";
+import moment from "moment";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import initModule from ".";
 
@@ -59,11 +60,29 @@ describe(`Routes`, () => {
     it("should get all transactions", async () => {
       const res = await server.inject({
         method: "GET",
-        url: `/transactions`
+        url: "/transactions",
+        query: { month: moment().format("YYYY-MM") }
       });
-      console.log("🚀 ~ file: routes.spec.ts ~ line 64 ~ it ~ res", res.json());
       expect(res.statusCode).toBe(200);
       expect(res.headers["x-total-count"]).toBe(10);
+    });
+
+    it("should insert a new transaction", async () => {
+      const res = await server.inject({
+        method: "POST",
+        url: "/transactions",
+        payload: { label: "newtransaction", value: 123456 }
+      });
+      expect(res.statusCode).toBe(200);
+      expect(res.json()).toMatchObject({ _id: 1010 })
+    });
+
+    it("should delete a transaction", async () => {
+      const res = await server.inject({
+        method: "DELETE",
+        url: "/transactions/1010",
+      });
+      expect(res.statusCode).toBe(200);
     });
   });
 });
