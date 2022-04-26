@@ -18,10 +18,12 @@ const main: FastifyPluginAsync = async (server) => {
   /** Transactions */
   server.get(`/transactions`, Transactions.query);
   server.post(`/transactions`, Transactions.insert);
+  server.get(`/transactions/:id`, Transactions.detail);
+  server.patch(`/transactions/:id`, Transactions.update);
   server.delete(`/transactions/:id`, Transactions.remove);
 
   /** Months */
-  server.get(`/months/:yearMonth`, Months.get);
+  server.get(`/months/:yearMonth`, Months.getByYearMonth);
 };
 
 export default main;

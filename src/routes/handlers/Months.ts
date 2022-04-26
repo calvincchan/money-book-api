@@ -2,7 +2,7 @@ import { Month } from "@/models/Month";
 import MongooseService from "@/services/MongooseService";
 import { RouteHandler } from "fastify";
 
-const get: RouteHandler<{ Params: { yearMonth: string } }> = async function (req, res) {
+const getByYearMonth: RouteHandler<{ Params: { yearMonth: string } }> = async function (req) {
   const db = MongooseService.getConnection();
   const Month = db.model<Month>("Month");
   const [year, month] = String(req.params.yearMonth).split("-");
@@ -15,7 +15,7 @@ const get: RouteHandler<{ Params: { yearMonth: string } }> = async function (req
   }
 }
 
-const insert: RouteHandler = async function (req, res) {
+const insert: RouteHandler = async function (req) {
   const db = MongooseService.getConnection();
   const Month = db.model<Month>("Month");
   const result = await Month.create(req.body);
@@ -23,6 +23,6 @@ const insert: RouteHandler = async function (req, res) {
 }
 
 export default {
-  get,
+  getByYearMonth,
   insert,
 }

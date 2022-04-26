@@ -4,13 +4,13 @@ import { RouteHandler } from "fastify";
 import moment from "moment";
 import { FilterQuery } from "mongoose";
 
-const query: RouteHandler<{ Querystring: { month: string; day: string } }> = async function (req, res) {
+const query: RouteHandler<{ Querystring: { month: string; day: string } }> = async function (req, reply) {
   const db = MongooseService.getConnection();
   const Transaction = db.model<Transaction>("Transaction");
   const filter = deriveFilter(req.query);
-  const result = await Transaction.find(filter).sort("_id");
+  const result = await Transaction.find(filter).sort("transactionDate");
   const count = await Transaction.countDocuments(filter);
-  res.header("X-Total-Count", count)
+  reply.header("X-Total-Count", count)
   return result;
 }
 
@@ -33,14 +33,37 @@ function deriveFilter(query: { month: string; day: string }): FilterQuery<Transa
   return result;
 }
 
-const insert: RouteHandler = async function (req, res) {
+const detail: RouteHandler<{ Params: { id: number } }> = async function (req, reply) {
+  const db = MongooseService.getConnection();
+  const Transaction = db.model<Transaction>("Transaction");
+  const result = await Transaction.findById(req.params.id);
+  if (!result) {
+    return reply.callNotFound();
+  } else {
+    return result;
+  }
+}
+
+const insert: RouteHandler = async function (req, reply) {
   const db = MongooseService.getConnection();
   const Transaction = db.model<Transaction>("Transaction");
   const result = await Transaction.create(req.body);
   return { _id: result._id };
 }
 
-const remove: RouteHandler<{ Params: { id: number } }> = async function (req, res) {
+const update: RouteHandler<{ Params: { id: number } }> = async function (req, reply) {
+  const db = MongooseService.getConnection();
+  const Transaction = db.model<Transaction>("Transaction");
+  const result = await Transaction.findById(req.params.id);
+  if (result) {
+    await result.set(req.body).save();
+    return { _id: req.params.id };
+  } else {
+    return reply.callNotFound();
+  }
+}
+
+const remove: RouteHandler<{ Params: { id: number } }> = async function (req, reply) {
   const db = MongooseService.getConnection();
   const Transaction = db.model<Transaction>("Transaction");
   const result = await Transaction.findById(req.params.id);
@@ -52,6 +75,8 @@ const remove: RouteHandler<{ Params: { id: number } }> = async function (req, re
 
 export default {
   query,
+  detail,
   insert,
+  update,
   remove
 }
