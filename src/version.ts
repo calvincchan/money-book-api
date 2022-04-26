@@ -1,1 +1,0 @@
-export default {"name":"money-book-api","version":"1.0.0","createdAt":"2022-04-25T09:17:02.476Z","gitBranch":"master","gitShort":"82fb327","gitDate":"2022-04-25T09:12:32.000Z","gitCount":5};
