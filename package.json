@@ -1,6 +1,7 @@
 {
   "name": "money-book-api",
   "version": "1.0.0",
+  "license": "MIT",
   "main": "dist/index.js",
   "typings": "src/types/*.d.ts",
   "files": [
