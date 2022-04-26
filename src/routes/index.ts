@@ -21,7 +21,6 @@ const main: FastifyPluginAsync = async (server) => {
   server.delete(`/transactions/:id`, Transactions.remove);
 
   /** Months */
-  server.post(`/months`, Months.insert);
   server.get(`/months/:yearMonth`, Months.get);
 };
 

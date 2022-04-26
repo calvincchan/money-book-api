@@ -1,3 +1,4 @@
+import { Month } from "@/models/Month";
 import { Connection, Document, Schema } from "mongoose";
 import { autoIncrement } from "mongoose-plugin-autoinc";
 
@@ -59,12 +60,33 @@ export async function initModel(connection: Connection) {
     }
   );
 
+  MainSchema.post("save", async function () {
+    const Month = connection.model<Month>("Month");
+    const yearNumber = this.transactionDate.getFullYear();
+    const monthNumber = this.transactionDate.getMonth() + 1;
+    let month = await Month.findOne({year: yearNumber, month: monthNumber});
+    if (!month) {
+      month = await Month.create({year: yearNumber, month: monthNumber});
+    }
+    await month.recalculate(this.transactionDate);
+  });
+
+  MainSchema.post("remove", async function () {
+    const Month = connection.model<Month>("Month");
+    const yearNumber = this.transactionDate.getFullYear();
+    const monthNumber = this.transactionDate.getMonth() + 1;
+    let month = await Month.findOne({year: yearNumber, month: monthNumber});
+    if (!month) {
+      month = await Month.create({year: yearNumber, month: monthNumber});
+    }
+    await month.recalculate(this.transactionDate);
+  });
+
   /** Add autoinc _id */
   MainSchema.plugin(autoIncrement, {
     model: MODEL_NAME,
     startAt: 1000,
   });
-
 
   connection.model(MODEL_NAME, MainSchema);
 }
