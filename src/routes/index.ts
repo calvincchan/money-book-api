@@ -1,10 +1,12 @@
 import MongooseService from "@/services/MongooseService";
 import { FastifyPluginAsync } from "fastify";
+import Months from "./handlers/Months";
 import Transactions from "./handlers/Transactions";
 
 const main: FastifyPluginAsync = async (server) => {
   /** DB Models */
-  await MongooseService.importModels(["Transaction"]);
+  await MongooseService.importModels(["Transaction", "Month"]);
+
   // /** API Schema */
   // const apiSchema = yaml.load(readFileSync(require.resolve("@/openapi/core.yaml"), "utf-8"));
   // apiSchema.$id = "core";
@@ -12,9 +14,15 @@ const main: FastifyPluginAsync = async (server) => {
 
   /** Routes */
   server.get("/", async function () { return { status: "running" }; });
+
+  /** Transactions */
   server.get(`/transactions`, Transactions.query);
   server.post(`/transactions`, Transactions.insert);
   server.delete(`/transactions/:id`, Transactions.remove);
+
+  /** Months */
+  server.post(`/months`, Months.insert);
+  server.get(`/months/:yearMonth`, Months.get);
 };
 
 export default main;

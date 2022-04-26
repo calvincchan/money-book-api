@@ -85,4 +85,46 @@ describe(`Routes`, () => {
       expect(res.statusCode).toBe(200);
     });
   });
+
+  describe(`/months`, () => {
+    const today = moment();
+    const year = today.get("year");
+    const month = today.get("month") + 1;
+
+    it("should create month data", async () => {
+      const res = await server.inject({
+        method: "POST",
+        url: "/months",
+        payload: { year, month }
+      });
+      expect(res.statusCode).toBe(200);
+    });
+
+    it("should get month data", async () => {
+      const res = await server.inject({
+        method: "GET",
+        url: `/months/${today.format("YYYY-MM")}`,
+      });
+      expect(res.statusCode).toBe(200);
+      expect(res.json()).toMatchObject({
+        _id: 100,
+        year,
+        month,
+        openingBalance: 0,
+        closingBalance: 0,
+        value: 0,
+        dateFrom: moment().set("year", year).set("month", month - 1).startOf("month").toISOString(),
+        dateTo: moment().set("year", year).set("month", month - 1).endOf("month").toISOString(),
+      });
+    });
+
+    it("should get month that does not exist", async () => {
+      const res = await server.inject({
+        method: "GET",
+        url: `/months/${today.format("1900-01")}`,
+      });
+      console.log("🚀 ~ file: routes.spec.ts ~ line 117 ~ it ~ res", res.json());
+      expect(res.statusCode).toBe(200);
+    });
+  });
 });
