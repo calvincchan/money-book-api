@@ -1,17 +1,8 @@
 import ConfigService from '@/services/ConfigService';
 import FastifyService from '@/services/FastifyService';
 import assert from 'assert';
-import debug from "debug";
 import moment from 'moment';
 import MongooseService from './services/MongooseService';
-
-/**
- * Auto enable full debug of NODE_ENV is not `production`
- */
-if (process.env.NODE_ENV !== "production") {
-  debug.enable("app*");
-  // require("mongoose").set("debug", true);
-}
 
 /**
  * Assert timezone is +0800

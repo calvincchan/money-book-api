@@ -53,7 +53,7 @@ const defaultConfig: ConfigData = {
   MONGO_URI: "",
   MONGO_DB_NAME: "moneybook",
   MONGO_SSL_CA: "",
-  NODE_ENV: process.env.NODE_ENV,
+  NODE_ENV: "",
 };
 
 const config: ConfigData = {};
@@ -90,6 +90,14 @@ async function startUp(initConfigData?: ConfigData): Promise<void> {
 
   /** Copy NODE_ENV from config back to process.env.NODE_ENV */
   process.env.NODE_ENV = get("NODE_ENV");
+
+  /**
+   * Auto enable full debug if NODE_ENV is `development`
+   */
+  if (process.env.NODE_ENV === "development") {
+    Debug.enable("app*");
+    // require("mongoose").set("debug", true);
+  }
 
   /** Debug log */
   for (const k in config) {

@@ -14,7 +14,7 @@ let server: FastifyInstance;
  * Instantiate a Fastify server and load modules.
  */
 export async function startUp(): Promise<FastifyInstance> {
-  const loggerEnabled = process.env.NODE_ENV !== "production";
+  const loggerEnabled = process.env.NODE_ENV === "development";
   // const loggerEnabled = false;
   server = await Fastify({ logger: loggerEnabled });
 
