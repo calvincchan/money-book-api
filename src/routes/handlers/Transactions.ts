@@ -57,7 +57,7 @@ const update: RouteHandler<{ Params: { id: number } }> = async function (req, re
   const result = await Transaction.findById(req.params.id);
   if (result) {
     await result.set(req.body).save();
-    return { _id: req.params.id };
+    return { _id: result._id };
   } else {
     return reply.callNotFound();
   }
@@ -69,8 +69,10 @@ const remove: RouteHandler<{ Params: { id: number } }> = async function (req, re
   const result = await Transaction.findById(req.params.id);
   if (result) {
     await result.remove();
+    return { _id: result._id };
+  } else {
+    return reply.callNotFound();
   }
-  return { removed: req.params.id };
 }
 
 export default {
