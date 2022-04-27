@@ -12,9 +12,12 @@
     "node": ">=14.0.0"
   },
   "scripts": {
+    "clean": "rm -rf dist/ && mkdir dist && cp -r src/openapi dist",
     "pretest": "node set-version.js",
     "test": "jest --runInBand",
     "dev": "node set-version.js && ts-node-dev --clear --respawn --exit-child -r tsconfig-paths/register src/",
+    "prebuild": "node set-version.js",
+    "build": "yarn clean && tsc -p tsconfig.json",
     "start": "node -r module-alias/register dist/index.js"
   },
   "dependencies": {
@@ -22,6 +25,7 @@
     "dotenv": "^16.0.0",
     "fastify": "^3.28.0",
     "fastify-cors": "^6.0.3",
+    "module-alias": "^2.2.2",
     "moment": "^2.29.3",
     "mongoose": "^6.3.1",
     "mongoose-plugin-autoinc": "^1.1.9",
@@ -49,5 +53,8 @@
     "ts-jest": "^27.1.4",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.14.1"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }

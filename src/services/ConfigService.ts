@@ -49,7 +49,6 @@ class ConfigData extends RuntimeConfigData {
 const defaultConfig: ConfigData = {
   HOST: "0.0.0.0",
   PORT: "50420",
-  SERVER_DOMAIN: "http://0.0.0.0:50420",
   MONGO_URI: "",
   MONGO_DB_NAME: "moneybook",
   MONGO_SSL_CA: "",

@@ -1,0 +1,11 @@
+### NODE_ENV set to "development" to enable Fastify logging
+# NODE_ENV=development
+
+### Host IP and port
+# HOST=0.0.0.0
+# PORT=50420
+
+### Mongo connection details
+# MONGO_URI=
+# MONGO_DB_NAME=moneybook
+# MONGO_SSL_CA=

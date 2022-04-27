@@ -1,0 +1,11 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Money Book API
+  description: Money Book API Server.
+  contact:
+    name: Calvin C. Chan
+    email: hello@calvin-c.com
+servers:
+  - url: 'http://127.0.0.1:50420'
+    description: Local Server

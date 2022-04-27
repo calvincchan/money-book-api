@@ -11,6 +11,6 @@ Money Book API is the backend engine that manages transactions and calculate mon
 ## Installation
 
 1. `yarn install`.
-2. `cp .env-example .env` and then adding the settings.
+2. `cp .example-env .env` and then edit the settings.
 3. `yarn dev` for development.
 4. `yarn build && yarn start` for production.
