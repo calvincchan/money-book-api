@@ -25,6 +25,7 @@
     "dotenv": "^16.0.0",
     "fastify": "^3.28.0",
     "fastify-cors": "^6.0.3",
+    "js-yaml": "^4.1.0",
     "module-alias": "^2.2.2",
     "moment": "^2.29.3",
     "mongoose": "^6.3.1",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.4.1",
+    "@types/js-yaml": "^4.0.5",
     "@types/tmp": "^0.2.3",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
