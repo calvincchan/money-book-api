@@ -73,7 +73,7 @@ describe(`Routes`, () => {
       const res = await server.inject({
         method: "POST",
         url: "/transactions",
-        payload: { label: "newtransaction", value: 800000 }
+        payload: { label: "newtransaction", value: 800000, transactionDate: "2022-01-01" }
       });
       expect(res.statusCode).toBe(200);
       expect(res.json()).toMatchObject({ _id: 1010 })

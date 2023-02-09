@@ -7,10 +7,10 @@ import Transactions from "./handlers/Transactions";
 
 const main: FastifyPluginAsync = async (server) => {
   /** DB Models */
-  await MongooseService.importModels(["Transaction", "Month"]);
+  await MongooseService.importModels(["Month", "Transaction"]);
 
   /** API Schema */
-  const apiSchema = yaml.load(readFileSync("@/openapi/docs.yaml", "utf-8")) as Record<string, unknown>;
+  const apiSchema = yaml.load(readFileSync(require.resolve("../openapi/docs.yaml"), "utf-8")) as Record<string, unknown>;
   apiSchema.$id = "docs";
   server.addSchema(apiSchema);
 

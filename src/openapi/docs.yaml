@@ -160,6 +160,8 @@ components:
           updatedAt: '2022-04-26T23:35:22.955Z'
           __v: 0
       properties:
+        _id:
+          type: number
         year:
           type: number
           description: Year ID
