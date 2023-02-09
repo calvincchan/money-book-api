@@ -60,24 +60,24 @@ export async function initModel(connection: Connection) {
     }
   );
 
-  MainSchema.post("save", async function () {
+  MainSchema.post("save", async function (this: Transaction) {
     const Month = connection.model<Month>("Month");
     const yearNumber = this.transactionDate.getFullYear();
     const monthNumber = this.transactionDate.getMonth() + 1;
-    let month = await Month.findOne({year: yearNumber, month: monthNumber});
+    let month = await Month.findOne({ year: yearNumber, month: monthNumber });
     if (!month) {
-      month = await Month.create({year: yearNumber, month: monthNumber});
+      month = await Month.create({ year: yearNumber, month: monthNumber });
     }
     await month.recalculate(this.transactionDate);
   });
 
-  MainSchema.post("remove", async function () {
+  MainSchema.post("remove", async function (this: Transaction) {
     const Month = connection.model<Month>("Month");
     const yearNumber = this.transactionDate.getFullYear();
     const monthNumber = this.transactionDate.getMonth() + 1;
-    let month = await Month.findOne({year: yearNumber, month: monthNumber});
+    let month = await Month.findOne({ year: yearNumber, month: monthNumber });
     if (!month) {
-      month = await Month.create({year: yearNumber, month: monthNumber});
+      month = await Month.create({ year: yearNumber, month: monthNumber });
     }
     await month.recalculate(this.transactionDate);
   });

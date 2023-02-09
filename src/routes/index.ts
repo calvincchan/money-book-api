@@ -10,8 +10,8 @@ const main: FastifyPluginAsync = async (server) => {
   await MongooseService.importModels(["Transaction", "Month"]);
 
   /** API Schema */
-  const apiSchema = yaml.load(readFileSync(require.resolve("@/openapi/docs.yaml"), "utf-8"));
-  Object.assign(apiSchema, { $id: "docs" });
+  const apiSchema = yaml.load(readFileSync("@/openapi/docs.yaml", "utf-8")) as Record<string, unknown>;
+  apiSchema.$id = "docs";
   server.addSchema(apiSchema);
 
   /** Routes */
