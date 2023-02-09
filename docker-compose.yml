@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  mongodb:
+    image: "mongo:5.0"
+    ports:
+      - 27017:27017
+    volumes:
+      - "mongodb_data:/data/db"
+    restart: "on-failure"
+  moneybook:
+    build: .
+    environment:
+      - PORT=50420
+      - MONGO_URI=mongodb://mongodb:27017/
+    depends_on:
+      - mongodb
+    ports:
+      - "50420:50420"
+    restart: "on-failure"
+
+volumes:
+  mongodb_data:
