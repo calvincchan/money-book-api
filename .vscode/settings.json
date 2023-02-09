@@ -1,0 +1,19 @@
+{
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  },
+  "terminal.integrated.profiles.osx": {
+    "Enable x86_64 arch on M1": {
+      "path": "arch",
+      "args": [
+        "-arch",
+        "x86_64",
+        "/bin/zsh"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "Enable x86_64 arch on M1"
+}
