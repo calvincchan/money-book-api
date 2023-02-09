@@ -1,8 +1,8 @@
 import initRoutes from "@/routes";
 import config from "@/services/ConfigService";
+import CorsPlugin from "@fastify/cors";
 import Debug from "debug";
 import Fastify, { FastifyInstance } from "fastify";
-import cors from "fastify-cors";
 
 /** Debugger */
 const log = Debug("app:FastifyService");
@@ -16,17 +16,28 @@ let server: FastifyInstance;
 export async function startUp(): Promise<FastifyInstance> {
   const loggerEnabled = process.env.NODE_ENV === "development";
   // const loggerEnabled = false;
-  server = await Fastify({ logger: loggerEnabled });
+  server = await Fastify({
+    logger: loggerEnabled, ajv: {
+      customOptions: {
+        strict: false,
+        allowUnionTypes: true,
+        removeAdditional: "all", // Refer to [ajv options](https://ajv.js.org/#options)
+      },
+    },
+  });
 
   /** CORS */
-  server.register(cors, { origin: "*", exposedHeaders: ["X-Current-Page", "X-Page-Size", "X-Total-Pages", "X-Total-Count", "Content-Disposition"] });
+  server.register(CorsPlugin, { origin: "*", exposedHeaders: ["X-Current-Page", "X-Page-Size", "X-Total-Pages", "X-Total-Count", "Content-Disposition"] });
 
   /** Init default routes. */
   server.register(initRoutes);
 
   /** Start server. */
   config.required(["HOST", "PORT"]);
-  server.listen(config.get("PORT"), config.get("HOST"), (error, address) => {
+  server.listen({
+    port: parseInt(config.get("PORT")),
+    host: config.get("HOST")
+  }, (error, address) => {
     if (error) {
       console.error(`🚨 Unable to start server: ${error}`);
     } else {
