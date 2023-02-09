@@ -15,7 +15,7 @@
     "clean": "rm -rf dist/ && mkdir dist && cp -r src/openapi dist",
     "pretest": "node set-version.js",
     "test": "jest --runInBand",
-    "dev": "export TZ=Asia/Hong_Kong && node set-version.js && ts-node-dev --clear --respawn --exit-child -r tsconfig-paths/register src/",
+    "dev": "node set-version.js && ts-node-dev --clear --respawn --exit-child -r tsconfig-paths/register src/",
     "prebuild": "node set-version.js",
     "build": "yarn clean && tsc -p tsconfig.json",
     "start": "node -r module-alias/register dist/index.js"
