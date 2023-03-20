@@ -19,12 +19,14 @@ Money Book API is the backend engine that manages transactions and calculate mon
 
 The following env vars are used to config the server. If a ".env" file exists, it will be used.
 
+```
 HOST: "0.0.0.0"
 PORT: "50420"
 MONGO_URI: ""
 MONGO_DB_NAME: "moneybook"
 MONGO_SSL_CA: ""
 NODE_ENV: ""
+```
 
 # Docker Compose
 
